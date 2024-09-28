@@ -1,0 +1,20 @@
+﻿<Window x:Class="ElectronicsStore.Views.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ElectronicsStore" xmlns:viewmodels="clr-namespace:ElectronicsStore.ViewModels" 
+        mc:Ignorable="d"
+        Title="LoginView" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen" 
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <StackPanel Margin="10">
+            <TextBox Width="200" Margin="0,0,0,10" ToolTip="Username" 
+                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
+            <PasswordBox Width="200" Margin="0,0,0,10" x:Name="PasswordBox" ToolTip="Password" 
+                         PasswordChanged="PasswordBox_PasswordChanged"/>
+            <Button Content="Войти" Command="{Binding LoginCommand}" Width="200"/>
+        </StackPanel>
+    </Grid>
+</Window>

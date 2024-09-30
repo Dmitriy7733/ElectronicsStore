@@ -40,17 +40,18 @@ namespace ElectronicsStore.ViewModels
         public ICommand RemoveFromCartCommand { get; }
         public ICommand UpdateQuantityCommand { get; }
         public string ConnectionString { get; private set; }
+        public ICommand CompleteOrderCommand { get; }
 
         public BuyerViewModel()
         {
             Products = new ObservableCollection<Product>();
             Cart = new Cart();
-
+            LoadProducts(); // Метод для загрузки продуктов из базы данных
             AddToCartCommand = new RelayCommand(AddToCart);
             RemoveFromCartCommand = new RelayCommand(RemoveFromCart);
             UpdateQuantityCommand = new RelayCommand(UpdateQuantity);
+            CompleteOrderCommand = new RelayCommand(CompleteOrder);
 
-            LoadProducts(); // Метод для загрузки продуктов из базы данных
         }
 
         private void AddToCart()
@@ -81,15 +82,7 @@ namespace ElectronicsStore.ViewModels
                 OnPropertyChanged(nameof(Cart));
             }
         }
-
-        // Реализация INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
+       
         private void LoadProducts()
         {
             Products.Clear();
@@ -131,15 +124,22 @@ namespace ElectronicsStore.ViewModels
                 }
             }
         }
-        public void CompleteOrder()
+        private void CompleteOrder()
         {
-            if (Cart.Items.Count > 0)
+            foreach (var item in Cart.Items)
             {
-                CreateOrder(); // Создание заказа и обновление базы данных
-                Cart.Clear(); // Очистка корзины после завершения заказа
-                LoadProducts(); // Обновить список товаров после изменения в корзине
-                OnPropertyChanged(nameof(Cart));
+                Data.Database.InsertOrder(item.ProductId, item.Quantity);
             }
+            Cart.Clear();
+            LoadProducts();
+            OnPropertyChanged(nameof(Cart));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

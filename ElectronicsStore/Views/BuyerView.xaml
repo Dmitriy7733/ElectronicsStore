@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ElectronicsStore.Views" 
+        xmlns:local="clr-namespace:ElectronicsStore.Views"
         xmlns:viewmodels="clr-namespace:ElectronicsStore.ViewModels" 
-        d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
         mc:Ignorable="d"
         Title="BuyerView" Height="450" Width="800">
     <Window.Resources>
+
         <!-- Стиль для ComboBox -->
         <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
             <Setter Property="Background" Value="#FFFFFF"/>
@@ -21,9 +21,9 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBox">
                         <Grid>
-                            <ToggleButton Name="ToggleButton" Template="{StaticResource ComboBoxToggleButton}" 
-                                          Focusable="False" IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, 
-                                          RelativeSource={RelativeSource TemplatedParent}}" 
+                            <ToggleButton Name="ToggleButton" 
+                                          Focusable="False" 
+                                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
                                           ClickMode="Press">
                                 <ContentPresenter/>
                             </ToggleButton>
@@ -94,12 +94,10 @@
                 <Setter.Value>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="Black"/>
                         <Style.Triggers>
-                            <Trigger Property="AlternationIndex" Value="0">
-                                <Setter Property="Background" Value="#FFFFFF"/>
-                            </Trigger>
-                            <Trigger Property="AlternationIndex" Value="1">
-                                <Setter Property="Background" Value="#F5F5F5"/>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E0E0E0"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -133,21 +131,20 @@
         </StackPanel>
 
         <ListView ItemsSource="{Binding Cart.Items}" 
-          Margin="0,0,0,10" 
-          Grid.Row="1" 
-          Style="{StaticResource ListViewStyle}" 
-          AlternationCount="2">
+                  Margin="0,0,0,10" 
+                  Grid.Row="1" 
+                  Style="{StaticResource ListViewStyle}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Product Name" 
-                            DisplayMemberBinding="{Binding Product.Name}" 
-                            Width="120"/>
+                                    DisplayMemberBinding="{Binding Product.Name}" 
+                                    Width="120"/>
                     <GridViewColumn Header="Quantity" 
-                            DisplayMemberBinding="{Binding Quantity}" 
-                            Width="80"/>
+                                    DisplayMemberBinding="{Binding Quantity}" 
+                                    Width="80"/>
                     <GridViewColumn Header="Price" 
-                            DisplayMemberBinding="{Binding Product.Price}" 
-                            Width="80"/>
+                                    DisplayMemberBinding="{Binding Product.Price}" 
+                                    Width="80"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -160,3 +157,4 @@
                    Foreground="#333333"/>
     </Grid>
 </Window>
+

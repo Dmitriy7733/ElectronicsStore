@@ -24,9 +24,5 @@ namespace ElectronicsStore
             DataContext = mainViewModel; // Установка DataContext
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Кнопка нажата");
-        }
     }
 }
